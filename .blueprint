@@ -1,0 +1,55 @@
+created:
+    - app/Http/Controllers/ServiceRequestController.php
+    - app/Http/Controllers/DiagnosticController.php
+    - app/Http/Controllers/RepairController.php
+    - app/Http/Controllers/PartController.php
+    - database/factories/UserFactory.php
+    - database/factories/VehicleFactory.php
+    - database/factories/ServiceRequestFactory.php
+    - database/factories/DiagnosticFactory.php
+    - database/factories/RepairFactory.php
+    - database/factories/PartFactory.php
+    - database/factories/RepairPartFactory.php
+    - database/migrations/2026_03_05_171522_create_users_table.php
+    - database/migrations/2026_03_05_171523_create_vehicles_table.php
+    - database/migrations/2026_03_05_171524_create_service_requests_table.php
+    - database/migrations/2026_03_05_171525_create_diagnostics_table.php
+    - database/migrations/2026_03_05_171526_create_repairs_table.php
+    - database/migrations/2026_03_05_171527_create_parts_table.php
+    - database/migrations/2026_03_05_171528_create_repair_parts_table.php
+    - app/Models/User.php
+    - app/Models/Vehicle.php
+    - app/Models/ServiceRequest.php
+    - app/Models/Diagnostic.php
+    - app/Models/Repair.php
+    - app/Models/Part.php
+    - app/Models/RepairPart.php
+    - tests/Feature/Http/Controllers/ServiceRequestControllerTest.php
+    - tests/Feature/Http/Controllers/DiagnosticControllerTest.php
+    - tests/Feature/Http/Controllers/RepairControllerTest.php
+    - tests/Feature/Http/Controllers/PartControllerTest.php
+    - app/Http/Requests/ServiceRequestStoreRequest.php
+    - app/Http/Requests/DiagnosticStoreRequest.php
+    - app/Http/Requests/RepairStoreRequest.php
+    - app/Http/Requests/PartStoreRequest.php
+    - app/Http/Requests/PartUpdateRequest.php
+    - resources/views/service_requests/index.blade.php
+    - resources/views/service_requests/create.blade.php
+    - resources/views/service_requests/show.blade.php
+    - resources/views/diagnostics/index.blade.php
+    - resources/views/diagnostics/create.blade.php
+    - resources/views/repairs/index.blade.php
+    - resources/views/repairs/create.blade.php
+    - resources/views/parts/index.blade.php
+    - resources/views/parts/create.blade.php
+    - resources/views/parts/edit.blade.php
+updated:
+    - routes/web.php
+models:
+    User: { name: string, surname: string, email: 'string unique', password: string, phone: 'string nullable', role: 'enum:klijent,serviser,administrator default:klijent', softDeletes: false, timestamps: timestamps }
+    Vehicle: { user_id: 'id foreign:users', registration: string, brand: 'string nullable', model: 'string nullable', timestamps: timestamps }
+    ServiceRequest: { user_id: 'id foreign:users', vehicle_id: 'id foreign:vehicles', serviser_id: 'id foreign:users nullable', tachograph_type: 'enum:analogni,digitalni', description: 'text nullable', desired_date: datetime, phone: string, status: 'enum:zakazano,u_dijagnostici,u_popravci,zavrseno default:zakazano', timestamps: timestamps }
+    Diagnostic: { service_request_id: 'id foreign:service_requests', problem_description: text, diagnostic_results: text, recommended_work: 'text nullable', timestamps: timestamps }
+    Repair: { service_request_id: 'id foreign:service_requests', work_done: text, seal_number: 'string nullable', pdf_path: 'string nullable', timestamps: timestamps }
+    Part: { name: string, code: 'string unique', supplier: 'string nullable', quantity: 'integer default:0', timestamps: timestamps }
+    RepairPart: { repair_id: 'id foreign:repairs', part_id: 'id foreign:parts', quantity_used: integer }

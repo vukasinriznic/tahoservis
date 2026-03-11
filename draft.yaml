@@ -1,0 +1,109 @@
+models:
+  User:
+    name: string
+    surname: string
+    email: string unique
+    password: string
+    phone: string nullable
+    role: enum:klijent,serviser,administrator default:klijent
+    timestamps: true
+
+  Vehicle:
+    user_id: id foreign:users
+    registration: string
+    brand: string nullable
+    model: string nullable
+    timestamps: true
+
+  ServiceRequest:
+    user_id: id foreign:users
+    vehicle_id: id foreign:vehicles
+    serviser_id: id foreign:users nullable
+    tachograph_type: enum:analogni,digitalni
+    description: text nullable
+    desired_date: datetime
+    phone: string
+    status: enum:zakazano,u_dijagnostici,u_popravci,zavrseno default:zakazano
+    timestamps: true
+
+  Diagnostic:
+    service_request_id: id foreign:service_requests
+    problem_description: text
+    diagnostic_results: text
+    recommended_work: text nullable
+    timestamps: true
+
+  Repair:
+    service_request_id: id foreign:service_requests
+    work_done: text
+    seal_number: string nullable
+    pdf_path: string nullable
+    timestamps: true
+
+  Part:
+    name: string
+    code: string unique
+    supplier: string nullable
+    quantity: integer default:0
+    timestamps: true
+
+  RepairPart:
+    repair_id: id foreign:repairs
+    part_id: id foreign:parts
+    quantity_used: integer
+
+controllers:
+  ServiceRequest:
+    index:
+      query: all
+      render: service_requests.index with:serviceRequests
+    create:
+      render: service_requests.create
+    store:
+      validate: vehicle_id, tachograph_type, description, desired_date, phone
+      save: serviceRequest
+      redirect: service-requests.index
+    show:
+      render: service_requests.show with:serviceRequest
+
+  Diagnostic:
+    index:
+      query: all
+      render: diagnostics.index with:diagnostics
+    create:
+      render: diagnostics.create
+    store:
+      validate: problem_description, diagnostic_results
+      save: diagnostic
+      redirect: diagnostics.index
+
+  Repair:
+    index:
+      query: all
+      render: repairs.index with:repairs
+    create:
+      render: repairs.create
+    store:
+      validate: work_done, seal_number
+      save: repair
+      redirect: repairs.index
+
+  Part:
+    index:
+      query: all
+      render: parts.index with:parts
+    create:
+      render: parts.create
+    store:
+      validate: name, code, supplier, quantity
+      save: part
+      redirect: parts.index
+    edit:
+      render: parts.edit with:part
+    update:
+      validate: name, code, supplier, quantity
+      update: part
+      redirect: parts.index
+    destroy:
+      delete: part
+      redirect: parts.index
