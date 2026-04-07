@@ -145,7 +145,7 @@ tahoservis/
 └── .env.example
 ```
 
-## 🔗 Live Demo
+## 🔗 Live Site
 
 👉 [View Live Site](https://tealfather.webflow.io)
 
