@@ -157,13 +157,10 @@
     </style>
 </head>
 <body>
-    <nav>
-        <div class="nav-brand">TAHO<span>SERVIS</span></div>
-    </nav>
 
     <div class="wrapper">
         <div class="card">
-            <div class="card-title">Dobro došli <span>nazad</span></div>
+            <div class="card-title">Dobro došli nazad</div>
             <div class="card-sub">Prijavite se na vaš nalog</div>
 
             @if ($errors->any())

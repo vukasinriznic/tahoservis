@@ -177,13 +177,10 @@
     </style>
 </head>
 <body>
-    <nav>
-        <div class="nav-brand">TAHO<span>SERVIS</span></div>
-    </nav>
 
     <div class="wrapper">
         <div class="card">
-            <div class="card-title">Kreirajte <span>nalog</span></div>
+            <div class="card-title">Kreirajte nalog</div>
             <div class="card-sub">Registracija novog klijenta</div>
 
             @if ($errors->any())
